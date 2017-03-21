@@ -15,7 +15,7 @@ Docker skeleton with Nginx, MySQL, Redis and PHP7 prepared for Symfony2/3 usage.
 where `symfony.dev` can be changed in `docker/nginx/configs/symfony.conf`
 
 6. Run `redeploy.sh`
-7. Now you can visit running application through **[symfony.dev:8080/app_dev.php](http://symfony.dev:8080/app_dev.php)**
+7. Now you can visit running application through **[symfony.dev:8080/app_dev.php](http://symfony.dev:8080/app_dev.php)** or **[symfony.dev:8080](http://symfony.dev:8080)**
 
 In application you can connect to database and redis using hosts `database_host` and `redis_host`.
 
