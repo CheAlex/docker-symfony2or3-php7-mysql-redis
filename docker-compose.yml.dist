@@ -1,0 +1,45 @@
+version: '2'
+
+services:
+    mysql:
+        image: mysql:5.7.17
+        ports:
+            - "4406:3306"
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE:      symfony
+#            MYSQL_USER:          symfony
+#            MYSQL_PASSWORD:      symfony
+        volumes:
+            - ./database:/var/lib/mysql
+            - ./application:/var/www/app
+
+    redis:
+        image: redis:3.2.8
+        ports:
+            - "6379:6379"
+
+    php_fpm:
+        build:
+            context: ./docker/php_fpm
+        volumes:
+            - ./application:/var/www/app
+        tty: true
+        working_dir: /var/www/app
+        links:
+            - "mysql:database_host"
+            - "redis:redis_host"
+
+    nginx:
+        build:
+            context: ./docker/nginx
+        ports:
+            - "8080:80"
+        environment:
+            TERM: xterm
+        volumes:
+            - ./application:/var/www/app
+            - ./docker/nginx/configs/symfony.conf:/etc/nginx/conf.d/symfony.conf
+            - ./logs/nginx/:/var/log/nginx
+        links:
+            - php_fpm
