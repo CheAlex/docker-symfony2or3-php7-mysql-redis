@@ -82,7 +82,7 @@ RUN    sed -i -e 's/listen = \/run\/php\/php7.1-fpm.sock/listen = 0.0.0.0:9001/g
     && sed -i -e 's/;daemonize = yes/daemonize = no/g'                            /etc/php/7.1/fpm/php-fpm.conf
 
 # Autocomplete Symfony
-COPY configs/symfony2-autocomplete.bash /etc/bash_completion.d/symfony2-autocomplete.bash
+COPY configs/symfony2and3-autocomplete.bash /etc/bash_completion.d/symfony2and3-autocomplete.bash
 
 # Configs bash start
 COPY configs/autostart.sh /root/autostart.sh
