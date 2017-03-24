@@ -36,50 +36,43 @@ RUN apt-get install -y language-pack-en-base
 RUN LC_ALL=en_US.UTF-8 add-apt-repository -y ppa:ondrej/php
 RUN apt-get update 
 RUN apt-get install -y \
-    php7.1 \
-    php7.1-cli \
-    php7.1-common \
-    php7.1-cgi \
-    php7.1-curl \
-    php7.1-imap \
-    php7.1-pgsql \
-    php7.1-sqlite3 \
-    php7.1-mysql \
-    php7.1-fpm \
-    php7.1-intl \
-    php7.1-gd \
+    php7.0 \
+    php-apcu \
+    php-apcu-bc \
     php-imagick \
-    php7.1-json \
-    php7.1-xml \
-    php7.1-mbstring \
-    php7.1-ctype \
-    php7.1-dev \
-    php-pear
-RUN pecl install xdebug
-RUN pecl install redis
-RUN rm /etc/php/7.1/cgi/php.ini
-RUN rm /etc/php/7.1/cli/php.ini
-RUN rm /etc/php/7.1/fpm/php.ini
-COPY configs/php/php.ini /etc/php/7.1/cgi/php.ini
-COPY configs/php/php.ini /etc/php/7.1/cli/php.ini
-COPY configs/php/php.ini /etc/php/7.1/fpm/php.ini
-RUN touch /etc/php/7.1/mods-available/redis.ini
-RUN sh -c "echo extension=redis.so > /etc/php/7.1/mods-available/redis.ini"
-RUN ln -s /etc/php/7.1/mods-available/redis.ini /etc/php/7.1/cgi/conf.d/20-redis.ini
-RUN ln -s /etc/php/7.1/mods-available/redis.ini /etc/php/7.1/cli/conf.d/20-redis.ini
-RUN ln -s /etc/php/7.1/mods-available/redis.ini /etc/php/7.1/fpm/conf.d/20-redis.ini
-COPY configs/php/xdebug.ini /etc/php/7.1/mods-available/xdebug.ini
-RUN ln -s /etc/php/7.1/mods-available/xdebug.ini /etc/php/7.1/cgi/conf.d/20-xdebug.ini
-RUN ln -s /etc/php/7.1/mods-available/xdebug.ini /etc/php/7.1/cli/conf.d/20-xdebug.ini
-RUN ln -s /etc/php/7.1/mods-available/xdebug.ini /etc/php/7.1/fpm/conf.d/20-xdebug.ini
+    php-pear \
+    php-redis \
+    php-xdebug \
+    php7.0-cgi \
+    php7.0-cli \
+    php7.0-common \
+    php7.0-ctype \
+    php7.0-curl \
+    php7.0-dev \
+    php7.0-fpm \
+    php7.0-gd \
+    php7.0-imap \
+    php7.0-intl \
+    php7.0-json \
+    php7.0-mbstring \
+    php7.0-mysql \
+    php7.0-pgsql \
+    php7.0-sqlite3 \
+    php7.0-xml
+RUN rm /etc/php/7.0/cgi/php.ini
+RUN rm /etc/php/7.0/cli/php.ini
+RUN rm /etc/php/7.0/fpm/php.ini
+COPY configs/php/php.ini /etc/php/7.0/cgi/php.ini
+COPY configs/php/php.ini /etc/php/7.0/cli/php.ini
+COPY configs/php/php.ini /etc/php/7.0/fpm/php.ini
+COPY configs/php/xdebug.ini /etc/php/7.0/mods-available/xdebug.ini
 RUN mkdir /var/log/xdebug
 RUN touch /var/log/xdebug/xdebug.log
 RUN chown www-data:www-data /var/log/xdebug/xdebug.log
 RUN chmod 664 /var/log/xdebug/xdebug.log
-RUN mkdir /run/php
-RUN    sed -i -e 's/listen = \/run\/php\/php7.1-fpm.sock/listen = 0.0.0.0:9001/g' /etc/php/7.1/fpm/pool.d/www.conf \
-    && sed -i -e 's/user = www-data/user = docker/g'                              /etc/php/7.1/fpm/pool.d/www.conf \
-    && sed -i -e 's/;daemonize = yes/daemonize = no/g'                            /etc/php/7.1/fpm/php-fpm.conf
+RUN    sed -i -e 's/listen = \/run\/php\/php7.0-fpm.sock/listen = 0.0.0.0:9001/g' /etc/php/7.0/fpm/pool.d/www.conf \
+    && sed -i -e 's/user = www-data/user = docker/g'                              /etc/php/7.0/fpm/pool.d/www.conf \
+    && sed -i -e 's/;daemonize = yes/daemonize = no/g'                            /etc/php/7.0/fpm/php-fpm.conf
 
 # Autocomplete Symfony
 COPY configs/symfony2and3-autocomplete.bash /etc/bash_completion.d/symfony2and3-autocomplete.bash
@@ -109,12 +102,12 @@ RUN export JAVA_HOME=/usr/lib/jvm/java-8-oracle
 # Install Ant
 RUN sudo apt-get install -y ant
 
-# Composer
+# Install Composer
 RUN cd /home
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer
 RUN chmod 777 /usr/local/bin/composer
 
-# Code standarts
+# Install code standarts
 RUN composer global require "squizlabs/php_codesniffer=*"
 RUN composer global require "sebastian/phpcpd=*"
 RUN composer global require "phpmd/phpmd=@stable"
