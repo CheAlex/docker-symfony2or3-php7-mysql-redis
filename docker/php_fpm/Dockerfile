@@ -57,6 +57,7 @@ RUN apt-get install -y \
     php7.0-mbstring \
     php7.0-mysql \
     php7.0-pgsql \
+    php7.0-soap \
     php7.0-sqlite3 \
     php7.0-xml
 RUN rm /etc/php/7.0/cgi/php.ini
@@ -70,7 +71,7 @@ RUN mkdir /var/log/xdebug
 RUN touch /var/log/xdebug/xdebug.log
 RUN chown www-data:www-data /var/log/xdebug/xdebug.log
 RUN chmod 664 /var/log/xdebug/xdebug.log
-RUN    sed -i -e 's/listen = \/run\/php\/php7.0-fpm.sock/listen = 0.0.0.0:9001/g' /etc/php/7.0/fpm/pool.d/www.conf \
+RUN    sed -i -e 's/listen = \/run\/php\/php7.0-fpm.sock/listen = 0.0.0.0:9000/g' /etc/php/7.0/fpm/pool.d/www.conf \
     && sed -i -e 's/user = www-data/user = docker/g'                              /etc/php/7.0/fpm/pool.d/www.conf \
     && sed -i -e 's/;daemonize = yes/daemonize = no/g'                            /etc/php/7.0/fpm/php-fpm.conf
 
@@ -117,7 +118,7 @@ RUN cd /usr/bin && ln -s ~/.composer/vendor/bin/phpcs
 
 # Open ports
 # 1) php-fpm handler
-EXPOSE 9001
+EXPOSE 9000
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
