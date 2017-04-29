@@ -59,7 +59,8 @@ RUN apt-get install -y \
     php7.0-pgsql \
     php7.0-soap \
     php7.0-sqlite3 \
-    php7.0-xml
+    php7.0-xml \
+    php7.0-zip
 RUN rm /etc/php/7.0/cgi/php.ini
 RUN rm /etc/php/7.0/cli/php.ini
 RUN rm /etc/php/7.0/fpm/php.ini
