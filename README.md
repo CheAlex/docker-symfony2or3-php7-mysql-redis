@@ -44,3 +44,5 @@ In application you can connect to database and redis using hosts `database_host`
 - `application` is the directory for project files. Our Nginx config is pointing to `./application/web`, which can be changed in `docker/nginx/configs/symfony.conf`
 - `database` is where MySQL will store the database files.
 - `logs/nginx` is where nginx will store the logs.
+
+P.S. Helpful util **[phpdocker.io/generator](https://phpdocker.io/generator)**
