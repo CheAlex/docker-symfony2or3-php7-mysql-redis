@@ -1,4 +1,4 @@
-FROM ubuntu:14.04.5
+FROM ubuntu:14.04.1
 
 MAINTAINER Alex Chernoivan <alexsnejinsky@gmail.com>
 
@@ -72,9 +72,9 @@ RUN mkdir /var/log/xdebug
 RUN touch /var/log/xdebug/xdebug.log
 RUN chown www-data:www-data /var/log/xdebug/xdebug.log
 RUN chmod 664 /var/log/xdebug/xdebug.log
-RUN    sed -i -e 's/listen = \/run\/php\/php7.0-fpm.sock/listen = 0.0.0.0:9000/g' /etc/php/7.0/fpm/pool.d/www.conf \
-    && sed -i -e 's/user = www-data/user = docker/g'                              /etc/php/7.0/fpm/pool.d/www.conf \
-    && sed -i -e 's/;daemonize = yes/daemonize = no/g'                            /etc/php/7.0/fpm/php-fpm.conf
+RUN sed -i -e 's/listen = \/run\/php\/php7.0-fpm.sock/listen = 0.0.0.0:9000/g' /etc/php/7.0/fpm/pool.d/www.conf \
+ && sed -i -e 's/user = www-data/user = docker/g'                              /etc/php/7.0/fpm/pool.d/www.conf \
+ && sed -i -e 's/;daemonize = yes/daemonize = no/g'                            /etc/php/7.0/fpm/php-fpm.conf
 
 # Autocomplete Symfony
 COPY configs/symfony2and3-autocomplete.bash /etc/bash_completion.d/symfony2and3-autocomplete.bash
